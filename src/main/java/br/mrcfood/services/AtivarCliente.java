@@ -10,7 +10,7 @@ import br.mrcfood.entities.Cliente;
 public class AtivarCliente {
 
 	// AutoInjecao (Ponto 1)
-	@TipoDoNotificador(NivelUrgencia.NORMAL)
+	@TipoDoNotificador(NivelUrgencia.URGENTE)
 	@Autowired
 	private INotificador notificador;
 	

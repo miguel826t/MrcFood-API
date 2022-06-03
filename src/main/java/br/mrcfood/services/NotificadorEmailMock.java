@@ -7,18 +7,20 @@ import org.springframework.stereotype.Component;
 
 import br.mrcfood.entities.Cliente;
 
-@Profile("prod")
+@Profile("develop")
 @TipoDoNotificador(NivelUrgencia.URGENTE)
 @Component
-public class NotificadorEmail implements INotificador {
+public class NotificadorEmailMock implements INotificador {
 
-	public NotificadorEmail() {
-		System.out.println("real");
+	public NotificadorEmailMock() {
+		System.out.println("Mock");
 	}
-
+	
 	@Override
 	public void notificar(Cliente cl, String msg) {
+
 		System.out.println(msg+" Email");
 	}
+
 
 }
