@@ -1,4 +1,4 @@
-package br.mrcfood.main;
+package br.mrcfood;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
