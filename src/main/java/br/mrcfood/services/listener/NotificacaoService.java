@@ -21,6 +21,4 @@ public class NotificacaoService {
 		notificador.notificar(event.getCliente()," seu cadastro está ativo!");
 	}
 	
-	
-	
 }
