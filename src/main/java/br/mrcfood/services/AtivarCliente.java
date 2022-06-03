@@ -18,6 +18,7 @@ public class AtivarCliente {
 	// AutoInjecao (Ponto 2)
 	// A anotacao no construtor indica que este é o construtor padrao que deve ser usado pelo spring
 	// Isto quando haver mais de um construtor na classe
+	// @Autowired(required = false) //torna esta dependencia opcional
 	@Autowired
 	public AtivarCliente(INotificador notificador) {
 		this.notificador = notificador;

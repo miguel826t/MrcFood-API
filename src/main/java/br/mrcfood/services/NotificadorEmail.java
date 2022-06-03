@@ -17,10 +17,13 @@ public class NotificadorEmail implements INotificador {
 		if(this.caixaAlta) {
 			msg = msg.toUpperCase();
 		}
+		
+		
 		System.out.println(msg);
 	}
 
 	public void setCaixaAlta(boolean caixaAlta) {
 		this.caixaAlta = caixaAlta;
 	}
+
 }
