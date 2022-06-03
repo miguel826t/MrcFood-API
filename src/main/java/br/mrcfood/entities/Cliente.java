@@ -3,10 +3,9 @@ package br.mrcfood.entities;
 public class Cliente {
 
 	private int Id;
-	
 	private String Nome;
-	
 	private String Email;
+	boolean Ativo = false;
 
 	public Cliente(int id, String nome,String email) {
 		this.Id = id;
@@ -37,4 +36,14 @@ public class Cliente {
 	public void setEmail(String email) {
 		Email = email;
 	}
+
+	public boolean isAtivo() {
+		return Ativo;
+	}
+
+	public void Ativar() {
+		Ativo = true;
+	}
+	
+	
 }

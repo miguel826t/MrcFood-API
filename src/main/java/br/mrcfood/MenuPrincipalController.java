@@ -22,7 +22,7 @@ public class MenuPrincipalController {
 	@GetMapping("/witam")
 	@ResponseBody
 	public String Witam() {
-		Cliente cl = new Cliente(1,"ee","teste");
+		Cliente cl = new Cliente(1,"MRC","sucesso");
 		ativarCliente.ativar(cl);
 		
 		return "Witam!";

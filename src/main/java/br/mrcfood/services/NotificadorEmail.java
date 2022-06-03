@@ -18,7 +18,7 @@ public class NotificadorEmail implements INotificador {
 
 	@Override
 	public void notificar(Cliente cl, String msg) {
-		System.out.println(msg+" Email");
+		System.out.println(cl.getNome() + msg);
 	}
 
 }
