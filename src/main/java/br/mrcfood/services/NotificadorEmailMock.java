@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import br.mrcfood.entities.Cliente;
+import br.mrcfood.services.interfaces.INotificador;
 
 @Profile("develop")
 @TipoDoNotificador(NivelUrgencia.URGENTE)

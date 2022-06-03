@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import br.mrcfood.entities.Cliente;
+import br.mrcfood.services.interfaces.INotificador;
 
 @TipoDoNotificador(NivelUrgencia.NORMAL)
 @Component

@@ -1,4 +1,4 @@
-package br.mrcfood.services;
+package br.mrcfood.services.interfaces;
 
 import br.mrcfood.entities.Cliente;
 
