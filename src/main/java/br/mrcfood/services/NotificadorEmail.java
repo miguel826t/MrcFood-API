@@ -30,5 +30,4 @@ public class NotificadorEmail implements INotificador {
 		System.out.println("porta: "+properties.getPortaServidor());
 		System.out.println(cl.getNome() + msg);
 	}
-
 }
