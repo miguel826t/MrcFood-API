@@ -21,8 +21,8 @@ public class BuscarCozinhaMain {
 		ICozinhaRepository czRepo = applicationContext.getBean(ICozinhaRepository.class);
 		Cozinha cz = czRepo.buscarPorId(1L);
 
-		System.out.println(cz.getId());
-		System.out.println(cz.getNome());
+		System.out.println(cz.getCzId());
+		System.out.println(cz.getCzNome());
 		
 	}
 }

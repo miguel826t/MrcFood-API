@@ -22,7 +22,7 @@ public class ExclusaoCozinhaMain {
 		
 		Cozinha cz = new Cozinha(1L,"Brasileira");
 		
-		czRepo.remover(cz.getId());
+		czRepo.remover(cz.getCzId());
 		
 		
 	}

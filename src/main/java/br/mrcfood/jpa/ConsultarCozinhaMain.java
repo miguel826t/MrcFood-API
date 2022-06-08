@@ -24,7 +24,7 @@ public class ConsultarCozinhaMain {
 		List<Cozinha> cozinhas = czRepo.buscalAll();
 		
 		for(Cozinha cz : cozinhas) {
-			System.out.println(cz.getNome());
+			System.out.println(cz.getCzNome());
 		}
 	}
 }
