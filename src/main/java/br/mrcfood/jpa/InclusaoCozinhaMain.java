@@ -6,6 +6,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import br.mrcfood.MrcFoodApiApplication;
 import br.mrcfood.domain.entity.Cozinha;
+import br.mrcfood.domain.repository.ICozinhaRepository;
 
 public class InclusaoCozinhaMain {
 
@@ -17,14 +18,14 @@ public class InclusaoCozinhaMain {
 				.run(args);
 		
 		
-		CadastroCozinha cd = applicationContext.getBean(CadastroCozinha.class);
+		ICozinhaRepository czRepo = applicationContext.getBean(ICozinhaRepository.class);
 		
 		// Como o DBMAKER não consegue ao incrementar o codigo(Id)
 		// Aqui deveria ser lido o banco para saber o proximo Id
 		Cozinha cozinha_1 = new Cozinha(3L,"microsoft");
 		Cozinha cozinha_2 = new Cozinha(4L,"nintendo");
-		cd.salvar(cozinha_1);
-		cd.salvar(cozinha_2);
+		czRepo.adicionar(cozinha_1);
+		czRepo.adicionar(cozinha_2);
 		
 	}
 }

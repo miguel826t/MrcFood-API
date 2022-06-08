@@ -6,6 +6,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import br.mrcfood.MrcFoodApiApplication;
 import br.mrcfood.domain.entity.Cozinha;
+import br.mrcfood.domain.repository.ICozinhaRepository;
 
 public class BuscarCozinhaMain {
 
@@ -17,8 +18,8 @@ public class BuscarCozinhaMain {
 				.run(args);
 		
 		
-		CadastroCozinha cd = applicationContext.getBean(CadastroCozinha.class);
-		Cozinha cz = cd.buscar(1L);
+		ICozinhaRepository czRepo = applicationContext.getBean(ICozinhaRepository.class);
+		Cozinha cz = czRepo.buscarPorId(1L);
 
 		System.out.println(cz.getId());
 		System.out.println(cz.getNome());

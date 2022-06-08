@@ -6,6 +6,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import br.mrcfood.MrcFoodApiApplication;
 import br.mrcfood.domain.entity.Cozinha;
+import br.mrcfood.domain.repository.ICozinhaRepository;
 
 public class ExclusaoCozinhaMain {
 
@@ -17,11 +18,11 @@ public class ExclusaoCozinhaMain {
 				.run(args);
 		
 		
-		CadastroCozinha cd = applicationContext.getBean(CadastroCozinha.class);
+		ICozinhaRepository czRepo = applicationContext.getBean(ICozinhaRepository.class);
 		
 		Cozinha cz = new Cozinha(1L,"Brasileira");
 		
-		cd.remover(cz.getId());
+		czRepo.remover(cz.getId());
 		
 		
 	}

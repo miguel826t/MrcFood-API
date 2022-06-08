@@ -8,6 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import br.mrcfood.MrcFoodApiApplication;
 import br.mrcfood.domain.entity.Cozinha;
+import br.mrcfood.domain.repository.ICozinhaRepository;
 
 public class ConsultarCozinhaMain {
 
@@ -19,8 +20,8 @@ public class ConsultarCozinhaMain {
 				.run(args);
 		
 		
-		CadastroCozinha cd = applicationContext.getBean(CadastroCozinha.class);
-		List<Cozinha> cozinhas = cd.listar();
+		ICozinhaRepository czRepo = applicationContext.getBean(ICozinhaRepository.class);
+		List<Cozinha> cozinhas = czRepo.buscalAll();
 		
 		for(Cozinha cz : cozinhas) {
 			System.out.println(cz.getNome());
