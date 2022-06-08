@@ -1,8 +1,7 @@
 package br.mrcfood.domain.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -19,7 +18,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Restaurante {
+public class Restaurante implements Serializable{
+	private static final long serialVersionUID = 1L;
 
 	//@GeneratedValue(strategy) não funciona DBMAKER não tem essa funciona de auto gerenciar a chave
 	//@GeneratedValue(strategy = GenerationType.SEQUENCE)
