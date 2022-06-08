@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 
@@ -12,6 +14,8 @@ import jakarta.persistence.Id;
 @Entity
 public class Restaurante {
 
+	//@GeneratedValue(strategy) não funciona DBMAKER não tem essa funciona de auto gerenciar a chave
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Id
 	private Long reId;
 	
