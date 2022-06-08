@@ -13,6 +13,15 @@ import jakarta.persistence.Table;
 @Table(name="Cozinha")
 public class Cozinha {
 
+	public Cozinha(Long czId, String czNome) {
+		super();
+		this.czId = czId;
+		this.czNome = czNome;
+	}
+	public Cozinha() {
+		
+	}
+
 	@Id
 	private Long czId;
 	

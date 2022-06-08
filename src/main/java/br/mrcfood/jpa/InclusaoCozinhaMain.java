@@ -1,7 +1,5 @@
 package br.mrcfood.jpa;
 
-import java.util.List;
-
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -9,7 +7,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import br.mrcfood.MrcFoodApiApplication;
 import br.mrcfood.domain.entity.Cozinha;
 
-public class ConsultarCozinhaMain {
+public class InclusaoCozinhaMain {
 
 	public static void main(String[] args) {
 		
@@ -20,10 +18,13 @@ public class ConsultarCozinhaMain {
 		
 		
 		CadastroCozinha cd = applicationContext.getBean(CadastroCozinha.class);
-		List<Cozinha> cozinhas = cd.listar();
 		
-		for(Cozinha cz : cozinhas) {
-			System.out.println(cz.getNome());
-		}
+		// Como o DBMAKER não consegue ao incrementar o codigo(Id)
+		// Aqui deveria ser lido o banco para saber o proximo Id
+		Cozinha cozinha_1 = new Cozinha(3L,"microsoft");
+		Cozinha cozinha_2 = new Cozinha(4L,"nintendo");
+		cd.adicionar(cozinha_1);
+		cd.adicionar(cozinha_2);
+		
 	}
 }

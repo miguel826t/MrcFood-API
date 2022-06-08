@@ -8,6 +8,7 @@ import br.mrcfood.domain.entity.Cozinha;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 
 @Component
 public class CadastroCozinha {
@@ -20,5 +21,9 @@ public class CadastroCozinha {
 		return query.getResultList();
 	}
 	
+	@Transactional
+	public Cozinha adicionar(Cozinha cozinha) {
+		return manager.merge(cozinha);
+	}
 	
 }
