@@ -7,10 +7,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import br.mrcfood.MrcFoodApiApplication;
-import br.mrcfood.domain.entity.Cozinha;
-import br.mrcfood.domain.repository.ICozinhaRepository;
+import br.mrcfood.domain.entity.Restaurante;
+import br.mrcfood.domain.repository.IRestauranteRepository;
 
-public class ConsultarCozinhaMain {
+public class ConsultarRestauranteMain {
 
 	public static void main(String[] args) {
 		
@@ -20,11 +20,11 @@ public class ConsultarCozinhaMain {
 				.run(args);
 		
 		
-		ICozinhaRepository czRepo = applicationContext.getBean(ICozinhaRepository.class);
-		List<Cozinha> cozinhas = czRepo.buscarAll();
+		IRestauranteRepository czRepo = applicationContext.getBean(IRestauranteRepository.class);
+		List<Restaurante> elus = czRepo.buscarAll();
 		
-		for(Cozinha cz : cozinhas) {
-			System.out.println(cz.getCzNome());
+		for(Restaurante elu : elus) {
+			System.out.printf("%s - %f - %s \n",elu.getReNome(),elu.getReTxFrete(),elu.getCozinha().getCzNome());
 		}
 	}
 }

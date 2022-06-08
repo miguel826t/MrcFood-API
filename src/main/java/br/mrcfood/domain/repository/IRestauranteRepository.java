@@ -6,7 +6,7 @@ import br.mrcfood.domain.entity.Restaurante;
 
 public interface IRestauranteRepository {
 	
-	List<Restaurante> buscalAll();
+	List<Restaurante> buscarAll();
 	Restaurante buscarPorId(Long id);
 	Restaurante adicionar(Restaurante rt);
 	void remover (Long id);

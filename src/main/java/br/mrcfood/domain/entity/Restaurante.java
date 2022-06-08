@@ -6,6 +6,7 @@ import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,4 +31,6 @@ public class Restaurante {
 	@Column(name = "taxa_frete")
 	private BigDecimal reTxFrete;
 
+	@ManyToOne
+	private Cozinha cozinha;
 }

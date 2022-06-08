@@ -24,8 +24,8 @@ public class InclusaoRestauranteMain {
 		
 		// Como o DBMAKER não consegue ao incrementar o codigo(Id)
 		// Aqui deveria ser lido o banco para saber o proximo Id
-		Restaurante cozinha_1 = new Restaurante(4L,"Eua texas",new BigDecimal("10.0"));
-		Restaurante cozinha_2 = new Restaurante(5L,"mexida br",new BigDecimal("5.4"));
+		Restaurante cozinha_1 = new Restaurante(4L,"Eua texas",new BigDecimal("10.0"),null);
+		Restaurante cozinha_2 = new Restaurante(5L,"mexida br",new BigDecimal("5.4"),null);
 		repo.adicionar(cozinha_1);
 		repo.adicionar(cozinha_2);
 		

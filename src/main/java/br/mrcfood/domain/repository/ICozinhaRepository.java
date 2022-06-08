@@ -6,7 +6,7 @@ import br.mrcfood.domain.entity.Cozinha;
 
 public interface ICozinhaRepository {
 	
-	List<Cozinha> buscalAll();
+	List<Cozinha> buscarAll();
 	Cozinha buscarPorId(Long id);
 	Cozinha adicionar(Cozinha cz);
 	void remover (Long id);
