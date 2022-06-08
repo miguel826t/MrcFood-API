@@ -7,7 +7,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import br.mrcfood.MrcFoodApiApplication;
 import br.mrcfood.domain.entity.Cozinha;
 
-public class InclusaoCozinhaMain {
+public class AlteracaoCozinhaMain {
 
 	public static void main(String[] args) {
 		
@@ -19,12 +19,10 @@ public class InclusaoCozinhaMain {
 		
 		CadastroCozinha cd = applicationContext.getBean(CadastroCozinha.class);
 		
-		// Como o DBMAKER não consegue ao incrementar o codigo(Id)
-		// Aqui deveria ser lido o banco para saber o proximo Id
-		Cozinha cozinha_1 = new Cozinha(3L,"microsoft");
-		Cozinha cozinha_2 = new Cozinha(4L,"nintendo");
-		cd.salvar(cozinha_1);
-		cd.salvar(cozinha_2);
+		Cozinha cz = new Cozinha(1L,"Brasileira");
+		
+		cd.salvar(cz);
+		
 		
 	}
 }
