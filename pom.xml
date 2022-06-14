@@ -40,7 +40,11 @@
 			<optional>true</optional>
 		</dependency>
 
-
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.mk</groupId>
 			<artifactId>testemk</artifactId>
@@ -62,6 +66,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
+
 
 	</dependencies>
 
