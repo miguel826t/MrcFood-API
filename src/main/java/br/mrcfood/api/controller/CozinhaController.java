@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.mrcfood.api.model.CozinhasXml;
 import br.mrcfood.domain.entity.Cozinha;
 import br.mrcfood.infrastructure.repository.CozinhaRepository;
 
@@ -19,10 +20,16 @@ public class CozinhaController {
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 	
-	//Define o tipo que este metodo retorna (produces = MediaType.APPLICATION_JSON_VALUE)
+	// Define o tipo que este metodo retorna (produces = MediaType.APPLICATION_JSON_VALUE)
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Cozinha> listar(){
 		return cozinhaRepository.buscarAll();
+	}
+	
+	// Se a solicitacao for um XML ele retornara neste metodo
+	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
+	public CozinhasXml listarXml(){
+		return new CozinhasXml(cozinhaRepository.buscarAll());
 	}
 	
 	@GetMapping(value = "/{cozinhaId}",produces = MediaType.APPLICATION_XML_VALUE)

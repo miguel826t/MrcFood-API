@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
+@JsonRootName("cozinha")
 @Getter
 @Setter
 @Entity
