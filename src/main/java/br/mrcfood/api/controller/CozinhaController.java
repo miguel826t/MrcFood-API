@@ -25,7 +25,7 @@ public class CozinhaController {
 		return cozinhaRepository.buscarAll();
 	}
 	
-	@GetMapping(value = "/{cozinhaId}")
+	@GetMapping(value = "/{cozinhaId}",produces = MediaType.APPLICATION_XML_VALUE)
 	public Cozinha buscar(@PathVariable("cozinhaId") Long id) {
 		return cozinhaRepository.buscarPorId(id);
 	}
