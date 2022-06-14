@@ -38,7 +38,4 @@ public class CozinhaRepository implements ICozinhaRepository{
 		Cozinha cozinha = buscarPorId(id);
 		manager.remove(cozinha);
 	}
-
-	
-	
 }

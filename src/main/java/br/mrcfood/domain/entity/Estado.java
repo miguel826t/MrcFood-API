@@ -1,23 +1,21 @@
 package br.mrcfood.domain.entity;
 
+import java.io.Serializable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-public class FormaPagamento {
-
+public class Estado implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@EqualsAndHashCode.Include
-	private Long fpId;
+	private Long id;
 	
-	private String descricao;
+	private String nome;
 	
 }
