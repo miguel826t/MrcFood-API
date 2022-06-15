@@ -22,6 +22,8 @@ import org.springframework.web.servlet.function.ServerRequest.Headers;
 
 import br.mrcfood.api.model.CozinhasXml;
 import br.mrcfood.domain.entity.Cozinha;
+import br.mrcfood.domain.exception.EntidadeEmUsoException;
+import br.mrcfood.domain.exception.EntidadeNaoEncontradaException;
 import br.mrcfood.domain.service.CadastroCozinhaService;
 import br.mrcfood.infrastructure.repository.CozinhaRepository;
 
@@ -76,14 +78,13 @@ public class CozinhaController {
 	
 	@DeleteMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> remover(@PathVariable Long cozinhaId){
-		Cozinha cozinha = cozinhaRepository.buscarPorId(cozinhaId);
-		if(cozinha == null)
-			return ResponseEntity.notFound().build();
 
 		try {
-			cozinhaRepository.remover(cozinhaId);			
-		}catch (DataIntegrityViolationException e) {
+			cadastroCozinha.remover(cozinhaId);			
+		}catch (EntidadeEmUsoException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}catch (EntidadeNaoEncontradaException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		
 		return ResponseEntity.noContent().build();

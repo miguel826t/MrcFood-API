@@ -2,6 +2,7 @@ package br.mrcfood.infrastructure.repository;
 
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
 import br.mrcfood.domain.entity.Cozinha;
@@ -36,6 +37,10 @@ public class CozinhaRepository implements ICozinhaRepository{
 	@Override
 	public void remover(Long id) {
 		Cozinha cozinha = buscarPorId(id);
+		if(cozinha == null) {
+			throw new EmptyResultDataAccessException(1);
+		}
+		
 		manager.remove(cozinha);
 	}
 }
