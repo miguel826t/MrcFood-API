@@ -36,22 +36,15 @@ public class CozinhaController {
 		return new CozinhasXml(cozinhaRepository.buscarAll());
 	}
 	
-	@GetMapping(value = "/{cozinhaId}",produces = MediaType.APPLICATION_XML_VALUE)
+	@GetMapping(value = "/{cozinhaId}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Cozinha> buscar(@PathVariable("cozinhaId") Long id) {
 		Cozinha cozinha = cozinhaRepository.buscarPorId(id);
+		if(cozinha == null) {
+			//return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			return ResponseEntity.notFound().build();
+		}
 		
-		/* ======* Formas de retornar Status *====== */
-		//return ResponseEntity.status(HttpStatus.OK).body(cozinha);
-		//return ResponseEntity.ok(cozinha);  //Retonar o OK com conteudo
-		//return ResponseEntity.ok().build(); //Retornaria OK mas sem conteudo
-		
-		/* ======* Retornar um redirected com um Header com a new location *====== */
-		HttpHeaders headers = new HttpHeaders(); //org.springframework.http.HttpHeaders
-		headers.add(HttpHeaders.LOCATION,"http://localhost:8080/cozinhas");
-		return ResponseEntity
-				.status(HttpStatus.FOUND)
-				.headers(headers)
-				.build();
+		return ResponseEntity.ok(cozinha);
 	}
 	
 }
