@@ -25,7 +25,12 @@ public class RestauranteService {
 	}
 	
 	public Restaurante buscarPorId(Long id) {
-		return restaurantes.buscarPorId(id);
+		Restaurante restaurante = restaurantes.buscarPorId(id); 
+		if(restaurante == null) {
+			throw new EntidadeNaoEncontradaException(
+					 String.format("Não existe um restaurante cadastrado com o código %d informado.", id));
+		}
+		return restaurante;
 	}
 	
 	public Restaurante criar(Restaurante restaurante) {
@@ -39,5 +44,17 @@ public class RestauranteService {
 		
 		return restaurantes.adicionar(restaurante);
 	}
+	
+	//public Restaurante atualizar(Long id,Restaurante restauranteAtualizado) {
+	//	
+	//	Restaurante restauranteAtual = buscarPorId(id);
+	//	
+	//	BeanUtils.copyProperties(restauranteAtualizado, restauranteAtual,"reId");
+	//	
+	//	restauranteAtualizado = criar(restauranteAtualizado);
+	//	
+	//	return restauranteAtualizado;
+	//	
+	//}
 	
 }
