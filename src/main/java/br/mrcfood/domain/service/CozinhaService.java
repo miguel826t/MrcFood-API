@@ -21,6 +21,10 @@ public class CozinhaService {
 		return cozinhas.adicionar(cozinha);
 	}
 	
+	public Cozinha buscarPorId(Long id) {
+		return cozinhas.buscarPorId(id);
+	}
+	
 	public void remover(Long cozinhaId) {
 		try {
 			cozinhas.remover(cozinhaId);			

@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.mrcfood.domain.entity.Cozinha;
 import br.mrcfood.domain.entity.Restaurante;
+import br.mrcfood.domain.exception.EntidadeNaoEncontradaException;
+import br.mrcfood.domain.service.CozinhaService;
 import br.mrcfood.domain.service.RestauranteService;
 
 @RestController
@@ -24,6 +27,9 @@ public class RestauranteController {
 	
 	@Autowired
 	private RestauranteService restauranteService;
+	
+	@Autowired
+	private CozinhaService cozinhaService;
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Restaurante> ListarAll(){
@@ -38,15 +44,15 @@ public class RestauranteController {
 		}
 		return ResponseEntity.ok(restaurante);
 	}
-	
-	
-	
-	
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Restaurante adicionar(@RequestBody Restaurante restaurante) {
-		//Restaurante r = new Restaurante(5L,"mexida br",new BigDecimal("5.4"),null);
-		return restauranteService.criar(restaurante);
+	public ResponseEntity<?> adicionar(@RequestBody Restaurante restaurante) {
+		try {
+			restaurante = restauranteService.criar(restaurante);
+			return ResponseEntity.status(HttpStatus.CREATED).body(restaurante);
+		}catch (EntidadeNaoEncontradaException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
-	
 }
