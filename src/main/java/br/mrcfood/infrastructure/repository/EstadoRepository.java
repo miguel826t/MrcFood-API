@@ -7,12 +7,17 @@ import org.springframework.stereotype.Repository;
 
 import br.mrcfood.domain.entity.Estado;
 import br.mrcfood.domain.repository.IEstadoRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 @Repository
 public class EstadoRepository {
 
 	@Autowired
 	private IEstadoRepository repository;
+	
+	@PersistenceContext
+	private EntityManager manager;
 	
 	public List<Estado> BuscarTodes(){
 		return repository.findAll();
@@ -23,6 +28,10 @@ public class EstadoRepository {
 	}
 	
 	public Estado adicionar(Estado cd) {
+		return repository.save(cd);
+	}
+	
+	public Estado atualizar(Estado cd) {
 		return repository.save(cd);
 	}
 	
