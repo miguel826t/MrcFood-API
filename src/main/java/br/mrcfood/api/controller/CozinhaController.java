@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.function.ServerRequest.Headers;
 
-import br.mrcfood.api.model.CozinhasXml;
 import br.mrcfood.domain.entity.Cozinha;
 import br.mrcfood.domain.exception.EntidadeEmUsoException;
 import br.mrcfood.domain.exception.EntidadeNaoEncontradaException;
-import br.mrcfood.domain.service.CadastroCozinhaService;
+import br.mrcfood.domain.service.CozinhaService;
 import br.mrcfood.infrastructure.repository.CozinhaRepository;
 
 @RestController
@@ -34,7 +30,7 @@ public class CozinhaController {
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 	@Autowired
-	private CadastroCozinhaService cadastroCozinha;
+	private CozinhaService cadastroCozinha;
 	
 	
 	// Define o tipo que este metodo retorna (produces = MediaType.APPLICATION_JSON_VALUE)
@@ -71,7 +67,7 @@ public class CozinhaController {
 			return ResponseEntity.notFound().build();
 		
 		BeanUtils.copyProperties(cozinha, cozinhaAtual,"czId");
-		cozinhaRepository.adicionar(cozinhaAtual);
+		cadastroCozinha.criar(cozinhaAtual);
 		
 		return ResponseEntity.ok(cozinhaAtual);
 	}	

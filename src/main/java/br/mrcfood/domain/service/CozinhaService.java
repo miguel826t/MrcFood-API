@@ -11,7 +11,7 @@ import br.mrcfood.domain.exception.EntidadeNaoEncontradaException;
 import br.mrcfood.infrastructure.repository.CozinhaRepository;
 
 @Service
-public class CadastroCozinhaService {
+public class CozinhaService {
 
 	@Autowired
 	private CozinhaRepository cozinhas;
@@ -32,4 +32,8 @@ public class CadastroCozinhaService {
 					String.format("Não existe um cadastro de cozinha com código %d",cozinhaId));
 		}
 	}
+	
+	
+	
+	
 }
