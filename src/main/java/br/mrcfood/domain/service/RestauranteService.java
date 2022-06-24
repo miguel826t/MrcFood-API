@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import br.mrcfood.domain.entity.Cozinha;
 import br.mrcfood.domain.entity.Restaurante;
 import br.mrcfood.domain.exception.EntidadeNaoEncontradaException;
-import br.mrcfood.infrastructure.repository.CozinhaRepository;
+import br.mrcfood.domain.repository.ICozinhaRepository;
 import br.mrcfood.infrastructure.repository.RestauranteRepository;
 
 @Service
@@ -18,7 +18,7 @@ public class RestauranteService {
 	private RestauranteRepository restaurantes;
 	
 	@Autowired
-	private CozinhaRepository cozinhas;
+	private ICozinhaRepository cozinhas;
 	
 	public List<Restaurante> ListarAll(){
 		return restaurantes.buscarAll();
@@ -35,11 +35,11 @@ public class RestauranteService {
 	
 	public Restaurante criar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getCzId();
-		Cozinha cozinha = cozinhas.buscarPorId(cozinhaId);
-		if(cozinha == null) {
-			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe cadastro de cozinha com o código %d informado.", cozinhaId));
-		}
+		
+		Cozinha cozinha = cozinhas.findById(cozinhaId)
+				.orElseThrow(()->new EntidadeNaoEncontradaException(
+						String.format("Não existe cadastro de cozinha com o código %d informado.", cozinhaId)));
+		
 		restaurante.setCozinha(cozinha);
 		
 		return restaurantes.adicionar(restaurante);

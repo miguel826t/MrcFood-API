@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.mrcfood.domain.entity.Cozinha;
-import br.mrcfood.infrastructure.repository.CozinhaRepository;
+import br.mrcfood.domain.repository.ICozinhaRepository;
 
 @RestController
 @RequestMapping("/testes")
 public class TesteController {
 	
 	@Autowired
-	private CozinhaRepository cozinhas;
+	private ICozinhaRepository cozinhas;
 	
-	@GetMapping("/cozinhas/por-nome")
-	public List<Cozinha> cozinhasPorNome(@RequestParam("nome") String nome){
-		return cozinhas.buscarPorNome(nome);
-	}
+	//@GetMapping("/cozinhas/por-nome")
+	//public List<Cozinha> cozinhasPorNome(@RequestParam("nome") String nome){
+	//	return cozinhas.buscarPorNome(nome);
+	//}
 	
 	
 	
