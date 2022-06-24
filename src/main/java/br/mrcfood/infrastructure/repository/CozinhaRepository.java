@@ -3,7 +3,7 @@ package br.mrcfood.infrastructure.repository;
 import java.util.List;
 
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.mrcfood.domain.entity.Cozinha;
 import br.mrcfood.domain.repository.ICozinhaRepository;
@@ -11,7 +11,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
-@Component
+@Repository
 public class CozinhaRepository implements ICozinhaRepository{
 
 	@PersistenceContext
@@ -25,6 +25,13 @@ public class CozinhaRepository implements ICozinhaRepository{
 	@Override
 	public Cozinha buscarPorId(Long id) {
 		return manager.find(Cozinha.class,id);
+	}
+	
+	@Override
+	public List<Cozinha> buscarPorNome(String nome) {
+		return manager.createQuery("from Cozinha where czNome like :nome",Cozinha.class)
+				.setParameter("nome", "%"+nome+"%")
+				.getResultList();
 	}
 
 	@Transactional

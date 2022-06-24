@@ -2,14 +2,14 @@ package br.mrcfood.infrastructure.repository;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.mrcfood.domain.entity.Permissao;
 import br.mrcfood.domain.repository.IPermissaoRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
-@Component
+@Repository
 public class PermissaoRepository implements IPermissaoRepository{
 
 	private EntityManager manager;
