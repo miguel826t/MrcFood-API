@@ -6,9 +6,9 @@ insert into COZINHA values (5,'Mexicana');
 insert into COZINHA values (6,'Peruana');
 
 insert into RESTAURANTE values (1,'Especialista Europeia',15,1);
-insert into RESTAURANTE values (2,'Amburges franceses',12.6,2);
-insert into RESTAURANTE values (3,'Brasuca free',69.1,3);
-insert into RESTAURANTE values (4,'Tacos do xico',0.58 ,4);
+insert into RESTAURANTE values (2,'Amburges franceses',12,2);
+insert into RESTAURANTE values (3,'Brasuca free',69,3);
+insert into RESTAURANTE values (4,'Tacos do xico',58 ,4);
 
 insert into ESTADO (id,nome)    values (1,'Sao Paulo');
 insert into ESTADO (id,nome)    values (2,'Minas');

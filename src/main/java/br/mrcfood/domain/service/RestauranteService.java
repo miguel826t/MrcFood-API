@@ -1,6 +1,7 @@
 package br.mrcfood.domain.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,28 +10,23 @@ import br.mrcfood.domain.entity.Cozinha;
 import br.mrcfood.domain.entity.Restaurante;
 import br.mrcfood.domain.exception.EntidadeNaoEncontradaException;
 import br.mrcfood.domain.repository.ICozinhaRepository;
-import br.mrcfood.infrastructure.repository.RestauranteRepository;
+import br.mrcfood.domain.repository.IRestauranteRepository;
 
 @Service
 public class RestauranteService {
 	
 	@Autowired
-	private RestauranteRepository restaurantes;
+	private IRestauranteRepository restaurantes;
 	
 	@Autowired
 	private ICozinhaRepository cozinhas;
 	
 	public List<Restaurante> ListarAll(){
-		return restaurantes.buscarAll();
+		return restaurantes.findAll();
 	}
 	
-	public Restaurante buscarPorId(Long id) {
-		Restaurante restaurante = restaurantes.buscarPorId(id); 
-		if(restaurante == null) {
-			throw new EntidadeNaoEncontradaException(
-					 String.format("Não existe um restaurante cadastrado com o código %d informado.", id));
-		}
-		return restaurante;
+	public Optional<Restaurante> buscarPorId(Long id) {
+		return restaurantes.findById(id); 
 	}
 	
 	public Restaurante criar(Restaurante restaurante) {
@@ -42,7 +38,7 @@ public class RestauranteService {
 		
 		restaurante.setCozinha(cozinha);
 		
-		return restaurantes.adicionar(restaurante);
+		return restaurantes.save(restaurante);
 	}
 	
 	//public Restaurante atualizar(Long id,Restaurante restauranteAtualizado) {

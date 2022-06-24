@@ -3,6 +3,7 @@ package br.mrcfood.api.controller;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,22 +30,23 @@ import br.mrcfood.domain.service.RestauranteService;
 @RestController
 @RequestMapping(value = "/restaurantes")
 public class RestauranteController {
-	
+
 	@Autowired
 	private RestauranteService restauranteService;
-	
+
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Restaurante> ListarAll(){
+	public List<Restaurante> ListarAll() {
 		return restauranteService.ListarAll();
 	}
-	
+
 	@GetMapping(value = "/{restauranteId}")
-	public ResponseEntity<Restaurante> buscarPorId(@PathVariable Long restauranteId){
-		Restaurante restaurante = restauranteService.buscarPorId(restauranteId);
-		if(restaurante == null) {
+	public ResponseEntity<Restaurante> buscarPorId(@PathVariable Long restauranteId) {
+
+		Optional<Restaurante> restaurante = restauranteService.buscarPorId(restauranteId);
+		if (restaurante.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(restaurante);
+		return ResponseEntity.ok(restaurante.get());
 	}
 
 	@PostMapping
@@ -53,65 +55,62 @@ public class RestauranteController {
 		try {
 			restaurante = restauranteService.criar(restaurante);
 			return ResponseEntity.status(HttpStatus.CREATED).body(restaurante);
-		}catch (EntidadeNaoEncontradaException e) {
+		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
-	
-    @PutMapping("/{restauranteId}")
-    public ResponseEntity<?> atualizar(@PathVariable Long restauranteId,
-        @RequestBody Restaurante restaurante) {
-        try {
-			Restaurante restauranteAtual = restauranteService.buscarPorId(restauranteId);
-			
-			if (restauranteAtual != null) {
-				BeanUtils.copyProperties(restaurante, restauranteAtual, "reId");
-				
-				restauranteAtual = restauranteService.criar(restauranteAtual);
-				return ResponseEntity.ok(restauranteAtual);
+
+	@PutMapping("/{restauranteId}")
+	public ResponseEntity<?> atualizar(@PathVariable Long restauranteId, @RequestBody Restaurante restaurante) {
+		try {
+			Optional<Restaurante> restauranteAtual = restauranteService.buscarPorId(restauranteId);
+
+			if (restauranteAtual.isPresent()) {
+				BeanUtils.copyProperties(restaurante, restauranteAtual.get(), "reId");
+
+				Restaurante restauranteAtualizado = restauranteService.criar(restauranteAtual.get());
+				return ResponseEntity.ok(restauranteAtualizado);
 			}
-			
+
 			return ResponseEntity.notFound().build();
-		
+
 		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.badRequest()
-					.body(e.getMessage());
+			return ResponseEntity.badRequest().body(e.getMessage());
 		}
-    }
-    
-    @PatchMapping("/{restauranteId}")
-    public ResponseEntity<?> atualizarParcial(
-    		@PathVariable Long restauranteId,
-    		@RequestBody Map<String,Object> campos){
-    	
-    	Restaurante restauranteAtual = restauranteService.buscarPorId(restauranteId);
-    	if(restauranteAtual == null) {
-    		return ResponseEntity.notFound().build();
-    	}
-    	
-    	merge(campos,restauranteAtual);
-    	
-    	return atualizar(restauranteId, restauranteAtual);
-    }
+	}
+
+	@PatchMapping("/{restauranteId}")
+	public ResponseEntity<?> atualizarParcial(@PathVariable Long restauranteId,
+			@RequestBody Map<String, Object> campos) {
+
+		Optional<Restaurante> restauranteAtual = restauranteService.buscarPorId(restauranteId);
+		if (restauranteAtual.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+
+		merge(campos, restauranteAtual.get());
+
+		return atualizar(restauranteId,restauranteAtual.get());
+	}
 
 	private void merge(Map<String, Object> campos, Restaurante restauranteDestino) {
-		
-		// Convertemos o objeto Json(mapper) para uma classe, assim os campos são auto convertidos
+
+		// Convertemos o objeto Json(mapper) para uma classe, assim os campos são auto
+		// convertidos
 		// para os tipos certos
 		ObjectMapper objectMapper = new ObjectMapper();
-		Restaurante restauranteOrigem = objectMapper.convertValue(campos,Restaurante.class);
-		
+		Restaurante restauranteOrigem = objectMapper.convertValue(campos, Restaurante.class);
+
 		// Agora para cada campo que foi declarado no Json (agora conv em objeto)
 		// Vamos pegar o valor e atribuir no restaurante destino
-		campos.forEach((nomePropriedade, valorPropriedade)->{
-    		Field field = ReflectionUtils.findField(Restaurante.class, nomePropriedade);
+		campos.forEach((nomePropriedade, valorPropriedade) -> {
+			Field field = ReflectionUtils.findField(Restaurante.class, nomePropriedade);
 			field.setAccessible(true);
-			
-			System.out.println("passou aki");
-			
+
 			Object novoValor = ReflectionUtils.getField(field, restauranteOrigem);
 			ReflectionUtils.setField(field, restauranteDestino, novoValor);
-    	});
+		});
+		
 	}
-    
+
 }

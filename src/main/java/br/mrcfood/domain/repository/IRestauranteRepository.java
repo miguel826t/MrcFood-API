@@ -1,14 +1,10 @@
 package br.mrcfood.domain.repository;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.mrcfood.domain.entity.Restaurante;
 
-public interface IRestauranteRepository {
-	
-	List<Restaurante> buscarAll();
-	Restaurante buscarPorId(Long id);
-	Restaurante adicionar(Restaurante rt);
-	void remover (Long id);
+public interface IRestauranteRepository extends JpaRepository<Restaurante,Long> {
+
 	
 }
