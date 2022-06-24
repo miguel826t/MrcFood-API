@@ -1,6 +1,7 @@
 package br.mrcfood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,6 @@ import br.mrcfood.domain.service.EstadoService;
 @RequestMapping(value = "/estados")
 public class EstadoController {
 	
-	// GET all
-	// GET id
-	// POST - new
-	// PUT - alterated
-	// Delete - remover
-	
 	@Autowired
 	private EstadoService estadoService;
 	
@@ -42,12 +37,12 @@ public class EstadoController {
 	
 	@GetMapping("/{estadoId}")
 	public ResponseEntity<Estado> buscar(@PathVariable("estadoId") Long id) {
-		try {
-			Estado estado = estadoService.buscarPorId(id);
-			return ResponseEntity.ok(estado);
-		}catch(EntidadeNaoEncontradaException e) {
+		
+		Optional<Estado> estado = estadoService.buscarPorId(id);
+		if(estado.isEmpty())
 			return ResponseEntity.notFound().build();
-		}
+		
+		return ResponseEntity.ok(estado.get());
 	}
 	
 	@PostMapping
@@ -58,18 +53,14 @@ public class EstadoController {
 	
 	@PutMapping("/{estadoId}")
 	public ResponseEntity<Estado> atualizar(@PathVariable Long estadoId,@RequestBody Estado estadoAtualizado) {
-		
-		Estado estadoAtual = new Estado();
-		try {
-			estadoAtual = estadoService.buscarPorId(estadoId);			
-		}catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.notFound().build();
-		}
 
+		Optional<Estado> estadoAtual = estadoService.buscarPorId(estadoId);			
+		if(estadoAtual.isEmpty())
+			return ResponseEntity.notFound().build();
 		
-		BeanUtils.copyProperties(estadoAtualizado, estadoAtual,"id");
-		estadoAtual = estadoService.criar(estadoAtual);
-		return ResponseEntity.ok(estadoAtual);
+		BeanUtils.copyProperties(estadoAtualizado, estadoAtual.get(),"id");
+		estadoAtualizado = estadoService.criar(estadoAtual.get());
+		return ResponseEntity.ok(estadoAtualizado);
 	}
 	
 	@DeleteMapping("/{estadoId}")

@@ -1,6 +1,7 @@
 package br.mrcfood.domain.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -10,35 +11,30 @@ import org.springframework.stereotype.Service;
 import br.mrcfood.domain.entity.Estado;
 import br.mrcfood.domain.exception.EntidadeEmUsoException;
 import br.mrcfood.domain.exception.EntidadeNaoEncontradaException;
-import br.mrcfood.infrastructure.repository.EstadoRepository;
+import br.mrcfood.domain.repository.IEstadoRepository;
 
 @Service
 public class EstadoService {
 
 	@Autowired
-	private EstadoRepository estados;
+	private IEstadoRepository estados;
 
 	public List<Estado> buscarAll() {
-		return estados.BuscarTodes();
+		return estados.findAll();
 	}
 
-	public Estado buscarPorId(Long id) {
-		Estado estado = estados.buscarPorId(id);
-		if (estado == null) {
-			throw new EntidadeNaoEncontradaException(
-					String.format("Estado informado com o código %d não existe cadastrado", id));
-		}
-
-		return estado;
+	public Optional<Estado> buscarPorId(Long id) {
+		return estados.findById(id);
+		
 	}
 
 	public Estado criar(Estado estado) {
-		return estados.adicionar(estado);
+		return estados.save(estado);
 	}
 
 	public void remover(Long id) {
 		try {
-			estados.remover(id);
+			estados.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
 					String.format("Estado de código %d não pode ser removida, pois está em uso", id));

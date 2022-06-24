@@ -12,13 +12,13 @@ import br.mrcfood.domain.entity.Cidade;
 import br.mrcfood.domain.entity.Estado;
 import br.mrcfood.domain.exception.EntidadeEmUsoException;
 import br.mrcfood.domain.exception.EntidadeNaoEncontradaException;
-import br.mrcfood.domain.repository.CidadeRepository;
+import br.mrcfood.domain.repository.ICidadeRepository;
 
 @Service
 public class CidadeService {
 
 	@Autowired
-	private CidadeRepository cidades;
+	private ICidadeRepository cidades;
 
 	@Autowired
 	private EstadoService estadoService;
@@ -39,26 +39,22 @@ public class CidadeService {
 		}
 
 		Long estadoId = cidade.getEstado().getId();
-		Estado estado = estadoService.buscarPorId(estadoId);
-		if (estado == null) {
-			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe um estado com o código %d informado", estadoId));
-		}
+		Estado estado = estadoService.buscarPorId(estadoId).orElseThrow(
+				() -> new EntidadeNaoEncontradaException(
+						String.format("Não existe um estado com o código %d informado", estadoId)));
+		
 		cidade.setEstado(estado);
-
 		return cidades.save(cidade);
 	}
 
 	public Cidade atualizar(Cidade cidade) {
 
 		Long estadoId = cidade.getEstado().getId();
-		Estado estado = estadoService.buscarPorId(estadoId);
-		if (estado == null) {
-			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe um estado com o código %d informado", estadoId));
-		}
+		Estado estado = estadoService.buscarPorId(estadoId).orElseThrow(
+				() -> new EntidadeNaoEncontradaException(
+						String.format("Não existe um estado com o código %d informado", estadoId)));
+		
 		cidade.setEstado(estado);
-
 		return cidades.save(cidade);
 	}
 
