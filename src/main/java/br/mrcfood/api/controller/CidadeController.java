@@ -1,6 +1,7 @@
 package br.mrcfood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,12 @@ public class CidadeController {
 	@GetMapping(value = "/{cidadeId}")
 	public ResponseEntity<Cidade> buscarPorId(@PathVariable Long cidadeId) {
 
-		Cidade cidade = cidadeService.buscarPorId(cidadeId);
-		if (cidade == null) {
+		Optional<Cidade> cidade = cidadeService.buscarPorId(cidadeId);
+		if (cidade.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 
-		return ResponseEntity.ok(cidade);
+		return ResponseEntity.ok(cidade.get());
 	}
 
 	@PostMapping
@@ -58,15 +59,15 @@ public class CidadeController {
 	@PutMapping(value = "/{cidadeId}")
 	public ResponseEntity<?> atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade) {
 
-		Cidade cidadeAtual = cidadeService.buscarPorId(cidadeId);
-		if (cidadeAtual == null) {
+		Optional<Cidade> cidadeAtual = cidadeService.buscarPorId(cidadeId);
+		if (cidadeAtual.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 
-		BeanUtils.copyProperties(cidade, cidadeAtual, "id");
+		BeanUtils.copyProperties(cidade, cidadeAtual.get(), "id");
 		try {
-			cidadeAtual = cidadeService.atualizar(cidadeAtual);
-			return ResponseEntity.ok(cidadeAtual);
+			Cidade cidadeAtualizada = cidadeService.atualizar(cidadeAtual.get());
+			return ResponseEntity.ok(cidadeAtualizada);
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}

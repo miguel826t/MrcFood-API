@@ -1,6 +1,7 @@
 package br.mrcfood.domain.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,7 +12,7 @@ import br.mrcfood.domain.entity.Cidade;
 import br.mrcfood.domain.entity.Estado;
 import br.mrcfood.domain.exception.EntidadeEmUsoException;
 import br.mrcfood.domain.exception.EntidadeNaoEncontradaException;
-import br.mrcfood.infrastructure.repository.CidadeRepository;
+import br.mrcfood.domain.repository.CidadeRepository;
 
 @Service
 public class CidadeService {
@@ -23,17 +24,17 @@ public class CidadeService {
 	private EstadoService estadoService;
 
 	public List<Cidade> buscarAll() {
-		return cidades.BuscarTodes();
+		return cidades.findAll();
 	}
 
-	public Cidade buscarPorId(Long id) {
-		return cidades.buscarPorId(id);
+	public Optional<Cidade> buscarPorId(Long id) {
+		return cidades.findById(id);
 	}
 
 	public Cidade criar(Cidade cidade) {
 
-		Cidade cidadeJaExiste = cidades.buscarPorId(cidade.getId());
-		if (cidadeJaExiste != null) {
+		Optional<Cidade> cidadeExiste = buscarPorId(cidade.getId());
+		if (cidadeExiste.isPresent()) {
 			throw new EntidadeEmUsoException(String.format("Cidade informada já existe cadastrada", cidade.getId()));
 		}
 
@@ -45,7 +46,7 @@ public class CidadeService {
 		}
 		cidade.setEstado(estado);
 
-		return cidades.adicionar(cidade);
+		return cidades.save(cidade);
 	}
 
 	public Cidade atualizar(Cidade cidade) {
@@ -58,12 +59,12 @@ public class CidadeService {
 		}
 		cidade.setEstado(estado);
 
-		return cidades.adicionar(cidade);
+		return cidades.save(cidade);
 	}
 
 	public void remover(Long id) {
 		try {
-			cidades.remover(id);
+			cidades.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
 					String.format("Não existe um cadastro de cidade com código %d", id));
