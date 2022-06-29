@@ -1,5 +1,6 @@
 package br.mrcfood.domain.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +40,10 @@ public class RestauranteService {
 		restaurante.setCozinha(cozinha);
 		
 		return restaurantes.save(restaurante);
+	}
+	
+	public List<Restaurante> buscarTodosPorTaxaFrete(BigDecimal taxaInicial, BigDecimal taxaFinal){
+		return restaurantes.findAllByreTxFreteBetween(taxaInicial, taxaFinal);
 	}
 	
 	//public Restaurante atualizar(Long id,Restaurante restauranteAtualizado) {
