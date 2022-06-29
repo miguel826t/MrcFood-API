@@ -14,7 +14,7 @@ public interface ICozinhaRepository extends JpaRepository<Cozinha, Long>{
 
 	List<Cozinha> findAllByczNome(String nome);
 	
-	@Query("from Cozinha where czNome like %:nome%")
+	//@Query("from Cozinha where czNome like %:nome%")
 	List<Cozinha> buscarPorNome(@Param("nome") String nome);
 	//List<Cozinha> findAllByczNomeContaining(String nome);
 	
