@@ -43,10 +43,17 @@ public class TesteController {
 	public List<Restaurante> buscarRestaurantesPorTaxaFrete(BigDecimal taxaInicial,BigDecimal taxaFinal){
 		return restauranteService.buscarTodosPorTaxaFrete(taxaInicial,taxaFinal);
 	}
+
+	@GetMapping("/restaurante/por-nome-frete")
+	public List<Restaurante> buscarRestaurantesPorNomeTaxaFrete(String nome,BigDecimal taxaInicial,BigDecimal taxaFinal){
+		return restaurantes.find(nome,taxaInicial,taxaFinal);
+	}
 	
 	@GetMapping("/restaurante/primeiro")
 	public Optional<Restaurante> buscarPrimeiroRestaurante(Long id){
 		return restaurantes.findFirstByreId(id);
 	}
+	
+	
 	
 }
